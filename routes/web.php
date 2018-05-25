@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/albums', "AlbumsController");
+Route::resource('/albums', "AlbumsController", ['only' => ['index']]);
