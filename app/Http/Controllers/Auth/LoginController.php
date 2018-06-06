@@ -55,8 +55,8 @@ class LoginController extends Controller
 
         $user = $service->createOrGetUser(Socialite::driver($provider)->user(), $provider);
         auth()->login($user);
-        
-        return redirect()->to('/home');
+
+        return redirect()->to('/');
     }
     
 }
