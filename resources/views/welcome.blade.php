@@ -68,12 +68,12 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+                    {{--@auth--}}
+                        {{--<a href="{{ url('/home') }}">Home</a>--}}
+                    {{--@else--}}
+                        {{--<a href="{{ route('login') }}">Login</a>--}}
+                        {{--<a href="{{ route('register') }}">Register</a>--}}
+                    {{--@endauth--}}
                 </div>
             @endif
 
@@ -82,13 +82,13 @@
                     Laravel w/ Kairi
                 </div>
                 <div class="m-b-md links">
-                    @if(\Auth::check()) 
+                    @auth
                         Logged in
                         <br>
                         <a href="/logout">Log Out</a>
                     @else
                         Not Logged in
-                    @endif
+                    @endauth
                 </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
