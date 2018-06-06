@@ -21,4 +21,8 @@ Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
+<<<<<<< HEAD
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+=======
+Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+>>>>>>> ccf0d2afd1f2f6073c7fc0c212559db5f646e91f
