@@ -17,7 +17,7 @@ class SocialAccountService
             return $account->user;
         } else {
 
-            $account = new SocialFacebookAccount([
+            $account = new SocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $provider
             ]);
