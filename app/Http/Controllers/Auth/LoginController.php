@@ -59,7 +59,7 @@ class LoginController extends Controller
         return redirect()->to($this->redirectTo);
     }
 
-    public function handleLogout()
+    public function logout()
     {
         auth()->logout();
 
