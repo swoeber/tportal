@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::resource('/albums', "AlbumsController", ['only' => ['index']]);
+
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');

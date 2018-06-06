@@ -1,0 +1,17 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script>
+	  // set-up a connection between the client and the server
+		var socket = io.connect("http://woeber.tech:3000");
+
+		// let's assume that the client page, once rendered, knows what room it wants to join
+		var room = "abc123";
+
+		socket.on('connect', function() {
+		   // Connected, let's sign-up for to receive messages for this 
+		   socket.emit('room', room);
+		});
+
+		socket.on('message', function(data) {
+		   console.log('Incoming message:', data);
+		});
+	</script>
