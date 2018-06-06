@@ -43,10 +43,15 @@ class LoginController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(SocialAccountService $service)
     {
-        $user = Socialite::driver('facebook')->user();
+        // $user = Socialite::driver('facebook')->user();
 
         // $user->token;
+
+        $user = $service->createOrGetUser(Socialite::driver('facebook')->user());
+        auth()->login($user);
+        return redirect()->to('/home');
     }
+    
 }
