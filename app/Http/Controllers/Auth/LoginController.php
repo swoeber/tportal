@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -56,7 +56,16 @@ class LoginController extends Controller
         $user = $service->createOrGetUser(Socialite::driver($provider)->user(), $provider);
         auth()->login($user);
 
-        return redirect()->to('/');
+        return redirect()->to($this->redirectTo);
+    }
+
+    public function handleLogout()
+    {
+        auth()->logout();
+
+        session()->flash('message', 'Some goodbye message');
+
+        return redirect($this->redirectTo);
     }
     
 }

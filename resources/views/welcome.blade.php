@@ -81,9 +81,11 @@
                 <div class="title m-b-md">
                     Laravel w/ Kairi
                 </div>
-                <div class="m-b-md">
+                <div class="m-b-md links">
                     @if(\Auth::check()) 
                         Logged in
+                        <br>
+                        <a href="/logout">Log Out</a>
                     @else
                         Not Logged in
                     @endif
