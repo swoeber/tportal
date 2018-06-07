@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\SocialAccountService;
 use Socialite;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -39,21 +40,33 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        $data = explode("/", \Route::getFacadeRoot()->current()->uri());
-
-        $provider = $data[1];
-
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProviderCallback(SocialAccountService $service)
+    public function loginUser(SocialAccountService $service, Request $request, $provider) 
     {
-        $data = explode("/", \Route::getFacadeRoot()->current()->uri());
-        $provider = $data[1];
+        $rules = [
+            "fb_token" => "required"
+        ];
 
+        $data = $request->validate($rules);
+
+        $user = Socialite::driver($provider)->userFromToken($data['fb_token']);
+        dd($user);
+        $user = $service->createOrGetUser($user, $provider);
+
+        auth()->login($user);
+
+        response()->json(auth()->user());
+
+    }
+
+    public function handleProviderCallback(SocialAccountService $service, $provider)
+    {
         $user = $service->createOrGetUser(Socialite::driver($provider)->user(), $provider);
+        
         auth()->login($user);
 
         return redirect()->to($this->redirectTo);
