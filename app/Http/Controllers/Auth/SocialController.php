@@ -60,21 +60,21 @@ class SocialController extends Controller
                 "message" => $validator->messages()]);
         }
 
-        // $user = Socialite::driver($provider)->userFromToken($request->get('fb_token'));
+        $user = Socialite::driver($provider)->userFromToken($request->get('fb_token'));
         
-        // $user = $service->createOrGetUser($user, $provider);
+        $user = $service->createOrGetUser($user, $provider);
 
-        $user = User::find(1);
+        // $user = User::find(1);
 
         return $this->getBearerTokenByUser($user, 1, true);
 
-        auth()->login($user);
+        // auth()->login($user);
 
-        return response()->json([
-                "error" => self::ERROR_INVALID,
-                "message" => "success",
-                "payload" => []
-            ]);
+        // return response()->json([
+        //         "error" => self::ERROR_INVALID,
+        //         "message" => "success",
+        //         "payload" => []
+        //     ]);
 
     }
 
