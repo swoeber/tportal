@@ -19,8 +19,8 @@ Route::resource('/albums', "AlbumsController", ['only' => ['index']]);
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialController@handleProviderCallback');
 
 
-Route::post('login/{provider}/test', 'Auth\LoginController@loginUser');
+Route::post('login/{provider}/test', 'Auth\SocialController@loginUser');
