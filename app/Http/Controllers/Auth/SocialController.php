@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\SocialAccountService;
 use Socialite;
-use Illuminate\Http\Request;
+use App\User;
+use App\Traits\PassportToken;
 
 class SocialController extends Controller
 {
@@ -21,7 +23,17 @@ class SocialController extends Controller
     |
     */
 
-    // use AuthenticatesUsers;
+    use PassportToken;
+
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('guest')->except('logout');
+    }
 
     /**
      * Where to redirect users after login.
@@ -37,19 +49,32 @@ class SocialController extends Controller
 
     public function loginUser(SocialAccountService $service, Request $request, $provider) 
     {
-        $rules = [
+
+        $validator = Validator::make($request->all(), [
             "fb_token" => "required"
-        ];
+        ]);
 
-        $data = $request->validate($rules);
+        if ($validator->fails()) {
+            return response()->json([
+                "error" => self::ERROR_INVALID,
+                "message" => $validator->messages()]);
+        }
 
-        $user = Socialite::driver($provider)->userFromToken($data['fb_token']);
+        // $user = Socialite::driver($provider)->userFromToken($request->get('fb_token'));
         
-        $user = $service->createOrGetUser($user, $provider);
+        // $user = $service->createOrGetUser($user, $provider);
+
+        $user = User::find(1);
+
+        return $this->getBearerTokenByUser($user, 1, true);
 
         auth()->login($user);
 
-        response()->json(auth()->user());
+        return response()->json([
+                "error" => self::ERROR_INVALID,
+                "message" => "success",
+                "payload" => []
+            ]);
 
     }
 
@@ -62,13 +87,5 @@ class SocialController extends Controller
         return redirect()->to($this->redirectTo);
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+
 }
