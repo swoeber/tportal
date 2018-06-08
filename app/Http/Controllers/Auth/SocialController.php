@@ -66,7 +66,7 @@ class SocialController extends Controller
 
         // $user = User::find(1);
 
-        return $this->getBearerTokenByUser($user, 1, true);
+        return $this->getBearerTokenByUser($user, 2, true);
 
         // auth()->login($user);
 
