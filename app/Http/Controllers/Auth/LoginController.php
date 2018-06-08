@@ -54,7 +54,7 @@ class LoginController extends Controller
         $data = $request->validate($rules);
 
         $user = Socialite::driver($provider)->userFromToken($data['fb_token']);
-        dd($user);
+        
         $user = $service->createOrGetUser($user, $provider);
 
         auth()->login($user);
