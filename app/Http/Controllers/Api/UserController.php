@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use DB, Mail, Hash;
 use \Laravel\Passport\Client;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class UserController extends Controller
 {
@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+
     }
 
     function forgotPassword(Request $request) {
