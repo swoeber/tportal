@@ -2,9 +2,12 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Laravel\Passport\HasApiTokens;
+
+
 
 class User extends Authenticatable
 {
@@ -16,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username'
+        'name', 'email', 'password', 'username',
     ];
 
     /**
@@ -27,4 +30,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function getPasswordResetToken($email)
+    {
+        return \DB::table(config('auth.passwords.users.table'))
+            ->select('token')
+            ->where('email', $email)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    public static function removePasswordResetTokens($email)
+    {
+        return \DB::table(config('auth.passwords.users.table'))
+            ->where('email', $email)
+            ->delete();
+    }
 }
