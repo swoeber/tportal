@@ -24,3 +24,6 @@ Route::get('login/{provider}/callback', 'Auth\SocialController@handleProviderCal
 
 
 Route::post('login/{provider}/test', 'Auth\SocialController@loginUser');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
