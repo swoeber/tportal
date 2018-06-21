@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use DB, Mail;
 use \Laravel\Passport\Client;
 use Illuminate\Http\Request;
 use App\User;
