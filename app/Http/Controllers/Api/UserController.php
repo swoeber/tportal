@@ -189,6 +189,31 @@ class UserController extends Controller
         }
     }
 
+    public function postUpdateUserName(Request $request) 
+    {
+        $valid = validator(
+            $request->only('username'), [
+                'username' => ['required', 'string', 'max:64', 'unique:users', 'regex:/[a-zA-Z0-9-]+/'],
+            ]
+        );
+
+        if ($valid->fails()) {
+            return response()->json(
+                ['code' => 400, 'payload' => $valid->errors()->all()]
+            );
+        }
+        
+        $data = request()->only('username');
+
+        $user = Auth::user();
+        $user->username = $data['username'];
+        $user->save();
+
+        return response()->json(
+            ['code' => 200, 'message' => 'Username Updated.']
+        );
+    }
+
     public function create(Request $request)
     {
         /**
