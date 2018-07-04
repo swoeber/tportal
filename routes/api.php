@@ -20,7 +20,11 @@ Route::post('/resetforgotpassword', 'Api\UserController@resetForgotPassword');
 
 Route::middleware('auth:api')->group(
     function () {
+        /*
+            [ User Items ]
+        */
         Route::post('/resetpassword', 'Api\UserController@resetPassword');
+        Route::post('/update-user-name', 'Api\UserController@postUpdateUserName');
 
         Route::get(
             '/user',
